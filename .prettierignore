@@ -1,3 +1,7 @@
 node_modules
 .next
-**/*.js
+.turbo
+dist
+storybook-static
+pnpm-lock.yaml
+packages/db/prisma/migrations
