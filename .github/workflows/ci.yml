@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Lint, types and build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Cache Turborepo
+        uses: actions/cache@v4
+        with:
+          path: .turbo
+          key: ${{ runner.os }}-turbo-${{ github.sha }}
+          restore-keys: ${{ runner.os }}-turbo-
+
+      - name: Check formatting
+        run: pnpm format:check
+
+      - name: Check the Keycloak theme is in sync with the design tokens
+        run: pnpm theme:check
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Check types
+        run: pnpm check-types
+
+      - name: Build
+        run: pnpm build
+        env:
+          # Nothing here is contacted during the build: Prisma only needs a
+          # parseable URL to generate its client, and Next only needs the
+          # public variables to be defined.
+          DATABASE_URL: postgresql://docs:docs@localhost:5442/docs?schema=public
+          AUTH_SECRET: ci-build-secret-not-used-at-runtime
+          AUTH_KEYCLOAK_ID: docs-web
+          AUTH_KEYCLOAK_SECRET: docs-web-secret
+          AUTH_KEYCLOAK_ISSUER: http://localhost:8088/realms/docs
+          NEXT_PUBLIC_API_URL: http://localhost:4000/api
+          NEXT_PUBLIC_COLLAB_URL: ws://localhost:4001
