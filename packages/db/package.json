@@ -1,0 +1,40 @@
+{
+  "name": "@repo/db",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "description": "Prisma schema and client shared by the API and the collaboration server",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "prisma"
+  ],
+  "scripts": {
+    "build": "prisma generate && tsc",
+    "dev": "tsc --watch --preserveWatchOutput",
+    "db:migrate": "prisma migrate dev",
+    "db:deploy": "prisma migrate deploy",
+    "db:studio": "prisma studio",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint . --max-warnings 0",
+    "clean": "rm -rf .turbo dist node_modules"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.19.3"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "^22.10.5",
+    "eslint": "^9.39.5",
+    "prisma": "^6.19.3",
+    "typescript": "^5.7.2"
+  }
+}

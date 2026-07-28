@@ -1,0 +1,80 @@
+// The application's own database. Everything that used to live in Convex, plus
+// the persisted Yjs state that used to live in Liveblocks.
+//
+// Identities are *not* stored here: `ownerId` is a Keycloak subject (`sub`) and
+// `organizationId` is a Keycloak group name. Keycloak stays the single source
+// of truth for who people are.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Document {
+  id    String @id @default(uuid()) @db.Uuid
+  title String
+
+  /// Keycloak `sub` of the creator.
+  ownerId String
+  /// Denormalised for listing without a round trip to Keycloak.
+  ownerName String
+
+  /// Keycloak group name, or null for a personal document.
+  organizationId String?
+
+  /// HTML the document is seeded with the first time it is opened.
+  initialContent String?
+
+  /// `Y.encodeStateAsUpdate(doc)` — written by the collaboration server.
+  state Bytes?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  notifications Notification[]
+
+  @@index([ownerId, createdAt(sort: Desc)])
+  @@index([organizationId, createdAt(sort: Desc)])
+  @@map("documents")
+}
+
+enum NotificationKind {
+  COMMENT
+  MENTION
+
+  @@map("notification_kind")
+}
+
+/// Written by the collaboration server whenever a new comment appears in a
+/// document's Y.Doc, so people get told about replies to threads they are not
+/// currently looking at.
+model Notification {
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Keycloak `sub` of the person being notified.
+  recipientId String
+
+  documentId String   @db.Uuid
+  document   Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+
+  threadId  String
+  commentId String
+
+  kind      NotificationKind
+  actorId   String
+  actorName String
+  excerpt   String
+
+  readAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  /// One notification per person per comment, so the collaboration server can
+  /// replay its mirroring pass without creating duplicates.
+  @@unique([recipientId, commentId])
+  @@index([recipientId, readAt, createdAt(sort: Desc)])
+  @@map("notifications")
+}
