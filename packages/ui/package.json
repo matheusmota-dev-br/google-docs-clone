@@ -1,0 +1,86 @@
+{
+  "name": "@repo/ui",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "description": "Atomic-design component library shared by every app in the monorepo",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "exports": {
+    ".": "./src/index.ts",
+    "./atoms": "./src/atoms/index.ts",
+    "./molecules": "./src/molecules/index.ts",
+    "./organisms": "./src/organisms/index.ts",
+    "./templates": "./src/templates/index.ts",
+    "./hooks": "./src/hooks/index.ts",
+    "./lib/utils": "./src/lib/utils.ts",
+    "./styles.css": "./styles.css"
+  },
+  "scripts": {
+    "lint": "eslint . --max-warnings 0",
+    "check-types": "tsc --noEmit",
+    "clean": "rm -rf .turbo node_modules"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^3.9.1",
+    "@radix-ui/react-accordion": "^1.2.2",
+    "@radix-ui/react-alert-dialog": "^1.1.4",
+    "@radix-ui/react-aspect-ratio": "^1.1.1",
+    "@radix-ui/react-avatar": "^1.1.2",
+    "@radix-ui/react-checkbox": "^1.1.3",
+    "@radix-ui/react-collapsible": "^1.1.2",
+    "@radix-ui/react-context-menu": "^2.2.4",
+    "@radix-ui/react-dialog": "^1.1.4",
+    "@radix-ui/react-dropdown-menu": "^2.1.4",
+    "@radix-ui/react-hover-card": "^1.1.4",
+    "@radix-ui/react-label": "^2.1.1",
+    "@radix-ui/react-menubar": "^1.1.4",
+    "@radix-ui/react-navigation-menu": "^1.2.3",
+    "@radix-ui/react-popover": "^1.1.4",
+    "@radix-ui/react-progress": "^1.1.1",
+    "@radix-ui/react-radio-group": "^1.2.2",
+    "@radix-ui/react-scroll-area": "^1.2.2",
+    "@radix-ui/react-select": "^2.1.4",
+    "@radix-ui/react-separator": "^1.1.1",
+    "@radix-ui/react-slider": "^1.2.2",
+    "@radix-ui/react-slot": "^1.1.1",
+    "@radix-ui/react-switch": "^1.1.2",
+    "@radix-ui/react-tabs": "^1.1.2",
+    "@radix-ui/react-toggle": "^1.1.1",
+    "@radix-ui/react-toggle-group": "^1.1.1",
+    "@radix-ui/react-tooltip": "^1.1.6",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "cmdk": "^1.0.4",
+    "embla-carousel-react": "^8.5.1",
+    "lucide-react": "^0.469.0",
+    "next-themes": "^0.4.4",
+    "react-hook-form": "^7.54.2",
+    "react-resizable-panels": "^2.1.7",
+    "sonner": "^1.7.1",
+    "tailwind-merge": "^2.6.0",
+    "vaul": "^1.1.2",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/tailwind-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@storybook/react-vite": "^10.5.5",
+    "@types/react": "^19.0.7",
+    "@types/react-dom": "^19.0.3",
+    "eslint": "^9.39.5",
+    "storybook": "^10.5.5",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.2"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "files": [
+    "src",
+    "styles.css"
+  ]
+}
