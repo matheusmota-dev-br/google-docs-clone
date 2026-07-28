@@ -1,0 +1,32 @@
+{
+  "name": "collab",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Yjs collaboration server: presence, CRDT sync, persistence and comment notifications",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "lint": "eslint . --max-warnings 0",
+    "check-types": "tsc --noEmit",
+    "clean": "rm -rf .turbo dist node_modules"
+  },
+  "dependencies": {
+    "@hocuspocus/extension-database": "^4.4.0",
+    "@hocuspocus/server": "^4.4.0",
+    "@repo/collab": "workspace:*",
+    "@repo/db": "workspace:*",
+    "dotenv": "^16.4.7",
+    "jose": "^6.2.4",
+    "yjs": "^13.6.31"
+  },
+  "devDependencies": {
+    "@hocuspocus/provider": "^4.4.0",
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "^22.10.5",
+    "eslint": "^9.39.5",
+    "tsx": "^4.23.1",
+    "typescript": "^5.7.2"
+  }
+}
