@@ -1,0 +1,143 @@
+{
+  "realm": "docs",
+  "displayName": "Docs",
+  "enabled": true,
+  "sslRequired": "none",
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": true,
+  "editUsernameAllowed": false,
+  "accessTokenLifespan": 900,
+  "ssoSessionIdleTimeout": 3600,
+  "ssoSessionMaxLifespan": 36000,
+  "groups": [
+    {
+      "name": "acme",
+      "path": "/acme"
+    },
+    {
+      "name": "globex",
+      "path": "/globex"
+    }
+  ],
+  "clients": [
+    {
+      "clientId": "docs-web",
+      "name": "Docs web app",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": false,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "docs-web-secret",
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": false,
+      "redirectUris": ["http://localhost:3000/*", "http://localhost:3001/*"],
+      "webOrigins": ["http://localhost:3000", "http://localhost:3001"],
+      "attributes": {
+        "post.logout.redirect.uris": "http://localhost:3000/*##http://localhost:3001/*"
+      },
+      "protocolMappers": [
+        {
+          "name": "groups",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-group-membership-mapper",
+          "config": {
+            "claim.name": "groups",
+            "full.path": "false",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true"
+          }
+        },
+        {
+          "name": "audience-docs-api",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "config": {
+            "included.client.audience": "docs-api",
+            "access.token.claim": "true",
+            "id.token.claim": "false"
+          }
+        }
+      ]
+    },
+    {
+      "clientId": "docs-api",
+      "name": "Docs API",
+      "description": "Validates bearer tokens and reads the member list through the admin API.",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": false,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "docs-api-secret",
+      "standardFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": true
+    }
+  ],
+  "users": [
+    {
+      "username": "user@teste.com",
+      "email": "user@teste.com",
+      "firstName": "Ana",
+      "lastName": "Souza",
+      "enabled": true,
+      "emailVerified": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "senha123",
+          "temporary": false
+        }
+      ],
+      "groups": ["/acme"],
+      "realmRoles": ["default-roles-docs"]
+    },
+    {
+      "username": "maria@teste.com",
+      "email": "maria@teste.com",
+      "firstName": "Maria",
+      "lastName": "Lima",
+      "enabled": true,
+      "emailVerified": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "senha123",
+          "temporary": false
+        }
+      ],
+      "groups": ["/acme"],
+      "realmRoles": ["default-roles-docs"]
+    },
+    {
+      "username": "joao@teste.com",
+      "email": "joao@teste.com",
+      "firstName": "João",
+      "lastName": "Pereira",
+      "enabled": true,
+      "emailVerified": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "senha123",
+          "temporary": false
+        }
+      ],
+      "groups": ["/acme", "/globex"],
+      "realmRoles": ["default-roles-docs"]
+    },
+    {
+      "username": "service-account-docs-api",
+      "enabled": true,
+      "serviceAccountClientId": "docs-api",
+      "clientRoles": {
+        "realm-management": ["view-users", "query-users", "query-groups"]
+      }
+    }
+  ],
+  "loginTheme": "docs",
+  "accountTheme": "keycloak.v3"
+}
