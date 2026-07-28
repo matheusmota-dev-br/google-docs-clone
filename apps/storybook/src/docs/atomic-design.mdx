@@ -1,0 +1,84 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Getting Started/Atomic Design" />
+
+# Atomic Design
+
+The library is split into four layers. The rule that makes the split useful is
+the **dependency direction**: a layer may import from the layers below it and
+never from the layers above.
+
+```
+templates   →  page layouts made of slots        AppShell, EditorShell
+    ↑
+organisms   →  complete sections of interface    AppHeader, DocumentTable
+    ↑
+molecules   →  small compositions with one job   SearchField, Dialog
+    ↑
+atoms       →  indivisible primitives            Button, Input, Spinner
+```
+
+## The four layers
+
+### Atoms
+
+One element, one job, no application knowledge. `Button`, `Input`, `Spinner`,
+`Logo`. If you can't remove anything from it and still have something useful,
+it's an atom.
+
+**Never** imports another layer.
+
+### Molecules
+
+A handful of atoms that only make sense together. `SearchField` is an `Input`
+plus two `Button`s plus submit-and-clear behaviour — useful as a unit,
+meaningless as parts.
+
+**May** import atoms.
+
+### Organisms
+
+A recognisable section of the product: `AppHeader`, `DocumentTable`,
+`TemplateGallery`. Organisms can hold local UI state (which menu is open), but
+**data always arrives as props**. That is what lets the same `DocumentTable`
+render a live Convex query in the app and a fixture array in Storybook.
+
+**May** import molecules and atoms.
+
+### Templates
+
+Layout only. `AppShell` says "a fixed 4rem header above scrolling content";
+it has no idea what a document is. Every region is a slot.
+
+**May** import anything below.
+
+## Where the app fits
+
+`apps/web` is deliberately _not_ a fifth layer inside the package. It holds the
+**pages** — the layer that supplies real data:
+
+```tsx
+// apps/web/src/app/(home)/documents-table.tsx
+export const DocumentsTable = ({ documents, canLoadMore, loadMore }) => (
+  <DocumentTable
+    documents={documents?.map(toSummary)} // REST payload → design-system shape
+    onSelect={(doc) => router.push(`/documents/${doc.id}`)}
+    canLoadMore={canLoadMore}
+    onLoadMore={loadMore}
+  />
+);
+```
+
+Anything that knows about Keycloak, the REST API, the Yjs socket or Next.js
+routing stays in the app. That boundary is the reason every organism in this
+Storybook can be rendered in isolation — including `ThreadSidebar`, which shows
+live comments in the product and fixtures here.
+
+## Deciding where a new component goes
+
+1. **Does it render one thing?** → atom.
+2. **Is it a few atoms that are useless apart?** → molecule.
+3. **Would a designer name it as a section of a screen?** → organism.
+4. **Is it only boxes and spacing, with slots for content?** → template.
+5. **Does it import a data client or a router?** → it belongs in `apps/web`, not
+   in the design system.

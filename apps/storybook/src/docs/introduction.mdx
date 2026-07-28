@@ -1,0 +1,70 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Getting Started/Introduction" />
+
+# Docs design system
+
+This Storybook documents **`@repo/ui`**, the component library behind the
+real-time collaborative editor in `apps/web`. Every component you see here is
+the component the product ships — there is no separate "documentation" copy.
+
+<div className="my-6 grid gap-3 sm:grid-cols-3">
+  <div className="rounded-lg border p-4">
+    <p className="text-sm font-medium">One source of truth</p>
+    <p className="mt-1 text-sm text-muted-foreground">
+      Stories live beside their component, so they move and get reviewed together.
+    </p>
+  </div>
+  <div className="rounded-lg border p-4">
+    <p className="text-sm font-medium">Tokens, not hex codes</p>
+    <p className="mt-1 text-sm text-muted-foreground">
+      Colour, radius and elevation come from CSS custom properties. Flip the theme in the
+      toolbar to check both.
+    </p>
+  </div>
+  <div className="rounded-lg border p-4">
+    <p className="text-sm font-medium">Accessible by default</p>
+    <p className="mt-1 text-sm text-muted-foreground">
+      Radix primitives underneath, and every story is checked by the a11y addon.
+    </p>
+  </div>
+</div>
+
+## Where things live
+
+| Path                         | What it is                                                                         |
+| ---------------------------- | ---------------------------------------------------------------------------------- |
+| `apps/web`                   | The Next.js application: routing, Convex data, Liveblocks presence, Tiptap editor. |
+| `apps/storybook`             | This site. Guides, token galleries and the Storybook configuration.                |
+| `packages/ui`                | The design system. Components, hooks and the design tokens.                        |
+| `packages/tailwind-config`   | Tailwind preset mapping tokens onto the theme.                                     |
+| `packages/eslint-config`     | Flat ESLint configs: `base`, `react-library`, `next`, `storybook`.                 |
+| `packages/typescript-config` | Shared `tsconfig` bases.                                                           |
+
+## Running it
+
+```bash
+pnpm storybook    # just this site, on :6006 — no services needed
+
+pnpm setup        # the full stack: install, env files, Postgres + Keycloak
+pnpm dev          # every app in the monorepo
+```
+
+Storybook is the fastest way into this repo: the design system has no data
+dependencies, so it runs without Docker, without a database and without
+signing in.
+
+## Using a component
+
+Import from the layer you depend on. The import path then states, at a glance,
+how deep in the system a file reaches:
+
+```tsx
+import { Button, Spinner } from "@repo/ui/atoms";
+import { SearchField } from "@repo/ui/molecules";
+import { DocumentTable } from "@repo/ui/organisms";
+import { AppShell } from "@repo/ui/templates";
+```
+
+Next up: [Atomic Design](?path=/docs/getting-started-atomic-design--docs) explains
+what belongs in each of those four layers.

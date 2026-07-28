@@ -1,0 +1,105 @@
+/**
+ * Design tokens for the whole monorepo.
+ *
+ * This file is *only* custom properties — no `@tailwind` directives — so it can
+ * be `@import`ed from any app's entry stylesheet regardless of that app's
+ * bundler. `@repo/tailwind-config` maps every token below onto Tailwind's
+ * theme, which is why components never hardcode a colour.
+ *
+ * Switching themes is a single `class="dark"` on <html>.
+ */
+
+:root {
+  /* Typography ---------------------------------------------------------- */
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Shape --------------------------------------------------------------- */
+  --radius: 0.5rem;
+
+  /* Surfaces ------------------------------------------------------------ */
+  --background: 0 0% 100%;
+  --foreground: 222 15% 12%;
+  --card: 0 0% 100%;
+  --card-foreground: 222 15% 12%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222 15% 12%;
+  --canvas: 210 10% 95%;
+
+  /* Intents ------------------------------------------------------------- */
+  --primary: 217 89% 51%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 220 14% 96%;
+  --secondary-foreground: 222 15% 12%;
+  --muted: 220 14% 96%;
+  --muted-foreground: 220 9% 46%;
+  --accent: 214 100% 96%;
+  --accent-foreground: 217 89% 40%;
+  --destructive: 4 71% 50%;
+  --destructive-foreground: 0 0% 100%;
+  --success: 145 63% 33%;
+  --success-foreground: 0 0% 100%;
+
+  /* Lines & focus ------------------------------------------------------- */
+  --border: 220 13% 91%;
+  --input: 220 13% 91%;
+  --ring: 217 89% 51%;
+
+  /* Data visualisation -------------------------------------------------- */
+  --chart-1: 217 89% 51%;
+  --chart-2: 173 58% 39%;
+  --chart-3: 43 89% 52%;
+  --chart-4: 280 55% 58%;
+  --chart-5: 4 71% 50%;
+
+  /* Sidebar ------------------------------------------------------------- */
+  --sidebar-background: 0 0% 98%;
+  --sidebar-foreground: 220 9% 30%;
+  --sidebar-primary: 217 89% 51%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 214 100% 96%;
+  --sidebar-accent-foreground: 217 89% 40%;
+  --sidebar-border: 220 13% 91%;
+  --sidebar-ring: 217 89% 51%;
+}
+
+.dark {
+  --background: 222 16% 10%;
+  --foreground: 210 20% 96%;
+  --card: 222 16% 12%;
+  --card-foreground: 210 20% 96%;
+  --popover: 222 16% 12%;
+  --popover-foreground: 210 20% 96%;
+  --canvas: 222 16% 7%;
+
+  --primary: 214 90% 62%;
+  --primary-foreground: 222 47% 11%;
+  --secondary: 220 13% 18%;
+  --secondary-foreground: 210 20% 96%;
+  --muted: 220 13% 18%;
+  --muted-foreground: 218 11% 65%;
+  --accent: 220 13% 21%;
+  --accent-foreground: 210 20% 96%;
+  --destructive: 0 63% 52%;
+  --destructive-foreground: 0 0% 100%;
+  --success: 145 50% 45%;
+  --success-foreground: 0 0% 100%;
+
+  --border: 220 13% 20%;
+  --input: 220 13% 22%;
+  --ring: 214 90% 62%;
+
+  --chart-1: 214 90% 62%;
+  --chart-2: 173 58% 49%;
+  --chart-3: 43 89% 62%;
+  --chart-4: 280 55% 68%;
+  --chart-5: 0 63% 62%;
+
+  --sidebar-background: 222 16% 12%;
+  --sidebar-foreground: 210 20% 90%;
+  --sidebar-primary: 214 90% 62%;
+  --sidebar-primary-foreground: 222 47% 11%;
+  --sidebar-accent: 220 13% 21%;
+  --sidebar-accent-foreground: 210 20% 96%;
+  --sidebar-border: 220 13% 20%;
+  --sidebar-ring: 214 90% 62%;
+}

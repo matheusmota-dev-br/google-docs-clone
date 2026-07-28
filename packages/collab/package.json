@@ -1,0 +1,39 @@
+{
+  "name": "@repo/collab",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "description": "The shape of a collaborative document's Y.Doc, shared by the editor and the server",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint . --max-warnings 0",
+    "clean": "rm -rf .turbo dist node_modules"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "eslint": "^9.39.5",
+    "tsup": "^8.5.1",
+    "typescript": "^5.7.2",
+    "yjs": "^13.6.31"
+  },
+  "peerDependencies": {
+    "yjs": "^13.6.0"
+  }
+}
